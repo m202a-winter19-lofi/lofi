@@ -1,0 +1,7 @@
+#Thu Mar 07 16:32:55 PST 2019
+base.0=C\:\\Users\\Carlo\\Desktop\\grad\\2-winter2019\\ee202\\project\\LOFI\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\out
+path.1=classes.dex
+renamed.1=classes2.dex
+path.0=classes.dex
+renamed.0=classes.dex
+base.1=C\:\\Users\\Carlo\\Desktop\\grad\\2-winter2019\\ee202\\project\\LOFI\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\out

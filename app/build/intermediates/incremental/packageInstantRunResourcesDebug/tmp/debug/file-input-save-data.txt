@@ -1,0 +1,11 @@
+#Internal package file, do not edit.
+#Wed Feb 27 22:03:47 PST 2019
+1.base=C\:\\Users\\Carlo\\Desktop\\grad\\2-winter2019\\ee202\\project\\LOFI\\app\\build\\intermediates\\merged_assets\\debug\\mergeDebugAssets\\out
+0.baseType=DIRECTORY
+1.baseType=DIRECTORY
+count=2
+1.set=ASSET
+0.path=activity_recognizer_4.tflite
+0.set=ASSET
+0.base=C\:\\Users\\Carlo\\Desktop\\grad\\2-winter2019\\ee202\\project\\LOFI\\app\\build\\intermediates\\merged_assets\\debug\\mergeDebugAssets\\out
+1.path=merged_dataset.csv

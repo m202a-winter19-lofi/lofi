@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="16dp"
+    android:paddingTop="16dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/activity1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/activity1str"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/activity2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity1"
+        android:text="@string/activity2str"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/activity3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity2"
+        android:text="@string/activity3str"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/activity4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity3"
+        android:text="@string/activity4str"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/activity1p"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/activity1"
+        android:textColor="#000000"
+        android:text="(init)"
+        android:layout_marginLeft="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity2p"
+        android:textColor="#000000"
+        android:text="(init)"
+        android:layout_toEndOf="@+id/activity2"
+        android:layout_below="@+id/activity1p"
+        android:layout_marginLeft="12dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity3p"
+        android:textColor="#000000"
+        android:text="(init)"
+        android:layout_toEndOf="@+id/activity3"
+        android:layout_below="@+id/activity2p"
+        android:layout_marginLeft="13dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity4p"
+        android:textColor="#000000"
+        android:text="(init)"
+        android:layout_toEndOf="@+id/activity4"
+        android:layout_below="@+id/activity3p"
+        android:layout_marginLeft="6dp"/>
+
+    <TextView
+        android:id="@+id/rec1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-"
+        android:textColor="#000000"
+        android:textAlignment="textEnd"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/activity4"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/rec2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-"
+        android:textColor="#000000"
+        android:textAlignment="textEnd"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/rec1"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/rec3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-"
+        android:textColor="#000000"
+        android:textAlignment="textEnd"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/rec2"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/rec4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-"
+        android:textColor="#000000"
+        android:textAlignment="textEnd"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/rec3"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/rec5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-"
+        android:textColor="#000000"
+        android:textAlignment="textEnd"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/rec4"
+        android:textSize="16sp"/>
+
+    <EditText
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/input_valence"
+        android:layout_alignParentTop="true"
+        android:inputType="numberDecimal|numberSigned"
+        android:layout_toLeftOf="@+id/input_arousal"/>
+
+
+    <EditText
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/input_arousal"
+        android:layout_alignParentTop="true"
+        android:inputType="numberDecimal|numberSigned"
+        android:layout_toLeftOf="@+id/input_stride"/>
+
+    <EditText
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/input_stride"
+        android:layout_alignParentTop="true"
+        android:inputType="numberDecimal|numberSigned"
+        android:layout_toLeftOf="@+id/get_songs"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/get_songs"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:text="GO"/>
+
+    <TextView
+        android:id="@+id/stride"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(stride rate init)"
+        android:textColor="#000000"
+        android:textAlignment="textEnd"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/rec5"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/eff_stride"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(effective stride rate init)"
+        android:textColor="#000000"
+        android:textAlignment="textEnd"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/stride"
+        android:textSize="20sp"/>
+
+</RelativeLayout>

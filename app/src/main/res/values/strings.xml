@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">LOFI</string>
+    <string name="activity1str">sitting</string>
+    <string name="activity2str">walking</string>
+    <string name="activity3str">jogging</string>
+    <string name="activity4str">standing</string>
+</resources>

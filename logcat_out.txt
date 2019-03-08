@@ -1,0 +1,425 @@
+2019-02-25 03:25:38.205 20370-20370/? E/AndroidRuntime: FATAL EXCEPTION: main
+    Process: com.example.lofi, PID: 20370
+    java.lang.RuntimeException: Unable to instantiate activity ComponentInfo{com.example.lofi/com.example.lofi.MainActivity}: java.lang.NullPointerException: Attempt to invoke virtual method 'android.content.res.Resources android.content.Context.getResources()' on a null object reference
+        at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:2754)
+        at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:2933)
+        at android.app.ActivityThread.-wrap11(Unknown Source:0)
+        at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1612)
+        at android.os.Handler.dispatchMessage(Handler.java:105)
+        at android.os.Looper.loop(Looper.java:164)
+        at android.app.ActivityThread.main(ActivityThread.java:6710)
+        at java.lang.reflect.Method.invoke(Native Method)
+        at com.android.internal.os.Zygote$MethodAndArgsCaller.run(Zygote.java:240)
+        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:770)
+     Caused by: java.lang.NullPointerException: Attempt to invoke virtual method 'android.content.res.Resources android.content.Context.getResources()' on a null object reference
+        at android.content.ContextWrapper.getResources(ContextWrapper.java:89)
+        at android.view.ContextThemeWrapper.getResourcesInternal(ContextThemeWrapper.java:127)
+        at android.view.ContextThemeWrapper.getAssets(ContextThemeWrapper.java:116)
+        at com.example.lofi.ActivityRecognizer.loadModelFile(ActivityRecognizer.java:128)
+        at com.example.lofi.ActivityRecognizer.<init>(ActivityRecognizer.java:34)
+        at com.example.lofi.MainActivity.<init>(MainActivity.java:105)
+        at java.lang.Class.newInstance(Native Method)
+        at android.app.Instrumentation.newActivity(Instrumentation.java:1174)
+        at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:2744)
+        at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:2933) 
+        at android.app.ActivityThread.-wrap11(Unknown Source:0) 
+        at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1612) 
+        at android.os.Handler.dispatchMessage(Handler.java:105) 
+        at android.os.Looper.loop(Looper.java:164) 
+        at android.app.ActivityThread.main(ActivityThread.java:6710) 
+        at java.lang.reflect.Method.invoke(Native Method) 
+        at com.android.internal.os.Zygote$MethodAndArgsCaller.run(Zygote.java:240) 
+        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:770) 
+
+(Resolved by moving all references to 'this' in MainActivity inside the onCreate function, since 'this' doesn't yet exist)
+
+---------
+2019-02-26 22:13:37.155 13551-13551/com.example.lofi E/AndroidRuntime: FATAL EXCEPTION: main
+    Process: com.example.lofi, PID: 13551
+    java.lang.IllegalArgumentException: DataType error: cannot resolve DataType of [[D
+        at org.tensorflow.lite.Tensor.dataTypeOf(Tensor.java:170)
+        at org.tensorflow.lite.Tensor.throwExceptionIfTypeIsIncompatible(Tensor.java:230)
+        at org.tensorflow.lite.Tensor.setTo(Tensor.java:93)
+        at org.tensorflow.lite.NativeInterpreterWrapper.run(NativeInterpreterWrapper.java:141)
+        at org.tensorflow.lite.Interpreter.runForMultipleInputsOutputs(Interpreter.java:250)
+        at org.tensorflow.lite.Interpreter.run(Interpreter.java:228)
+        at com.example.lofi.ActivityRecognizer.runInference(ActivityRecognizer.java:124)
+        at com.example.lofi.MainActivity$1.onSensorChanged(MainActivity.java:43)
+        at android.hardware.SystemSensorManager$SensorEventQueue.dispatchSensorEvent(SystemSensorManager.java:856)
+        at android.os.MessageQueue.nativePollOnce(Native Method)
+        at android.os.MessageQueue.next(MessageQueue.java:325)
+        at android.os.Looper.loop(Looper.java:142)
+        at android.app.ActivityThread.main(ActivityThread.java:6710)
+        at java.lang.reflect.Method.invoke(Native Method)
+        at com.android.internal.os.Zygote$MethodAndArgsCaller.run(Zygote.java:240)
+        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:770)
+		
+(Resolved: doubles don't work with TFLite - used floats)
+
+---------
+2019-02-27 22:34:47.676 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3461
+2019-02-27 22:34:47.676 16925-16925/com.example.lofi I/DATASET: 3460
+2019-02-27 22:34:47.676 16925-16925/com.example.lofi I/DATASET: SOJIRQM12A81C2374E
+2019-02-27 22:34:47.676 16925-16925/com.example.lofi I/DATASET: TRKRCHH128F4231769
+2019-02-27 22:34:47.676 16925-16925/com.example.lofi I/DATASET: 1.0719011311700002
+2019-02-27 22:34:47.676 16925-16925/com.example.lofi I/DATASET: 0.8468301807240001
+2019-02-27 22:34:47.676 16925-16925/com.example.lofi I/DATASET: Do You Know Where You're Going To
+2019-02-27 22:34:47.676 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3462
+2019-02-27 22:34:47.676 16925-16925/com.example.lofi I/DATASET: 3461
+2019-02-27 22:34:47.676 16925-16925/com.example.lofi I/DATASET: TRIMHOP12903CF766C
+2019-02-27 22:34:47.676 16925-16925/com.example.lofi I/DATASET: 0.815392789182
+2019-02-27 22:34:47.677 16925-16925/com.example.lofi I/DATASET: Memphis Soul Stew
+2019-02-27 22:34:47.677 16925-16925/com.example.lofi I/DATASET: 113.797
+2019-02-27 22:34:47.677 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3463
+2019-02-27 22:34:47.677 16925-16925/com.example.lofi I/DATASET: 3462
+2019-02-27 22:34:47.677 16925-16925/com.example.lofi I/DATASET: 100914872
+2019-02-27 22:34:47.677 16925-16925/com.example.lofi I/DATASET: SOYZRTB12A6310D872
+2019-02-27 22:34:47.677 16925-16925/com.example.lofi I/DATASET: TRFUXJV128F932FC83
+2019-02-27 22:34:47.677 16925-16925/com.example.lofi I/DATASET: -1.4367868376100001
+2019-02-27 22:34:47.677 16925-16925/com.example.lofi I/DATASET: The Rolling Stones
+2019-02-27 22:34:47.677 16925-16925/com.example.lofi I/DATASET: Sister Morphine
+2019-02-27 22:34:47.677 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3464
+2019-02-27 22:34:47.677 16925-16925/com.example.lofi I/DATASET: 3463
+2019-02-27 22:34:47.677 16925-16925/com.example.lofi I/DATASET: 101022098
+2019-02-27 22:34:47.677 16925-16925/com.example.lofi I/DATASET: TRHKQRJ128F92FB374
+2019-02-27 22:34:47.677 16925-16925/com.example.lofi I/DATASET: -0.8816667395350001
+2019-02-27 22:34:47.677 16925-16925/com.example.lofi I/DATASET: City And Colour
+2019-02-27 22:34:47.677 16925-16925/com.example.lofi I/DATASET: Sleeping Sickness
+2019-02-27 22:34:47.677 16925-16925/com.example.lofi I/DATASET: 135.801
+2019-02-27 22:34:47.677 16925-16925/com.example.lofi I/DATASET: 3464
+2019-02-27 22:34:47.677 16925-16925/com.example.lofi I/DATASET: -0.36081300089699997
+2019-02-27 22:34:47.677 16925-16925/com.example.lofi I/DATASET: City And Colour
+2019-02-27 22:34:47.677 16925-16925/com.example.lofi I/DATASET: Constant Knot
+2019-02-27 22:34:47.677 16925-16925/com.example.lofi I/DATASET: 3465
+2019-02-27 22:34:47.677 16925-16925/com.example.lofi I/DATASET: 101022106
+2019-02-27 22:34:47.677 16925-16925/com.example.lofi I/DATASET: SOXSMAC12A8C1417B3
+2019-02-27 22:34:47.677 16925-16925/com.example.lofi I/DATASET: TRCTTPW128F92CC664
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: City And Colour
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: 43.987
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3467
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: SOYTAOY12A8AE46645
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: TRBURIA128F4260AC0
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: Janis Joplin
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: A Woman Left Lonely
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: 74.553
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3468
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: 3467
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: 101216346
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: -0.34162356189900006
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: -0.0934721438967
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: Janis Joplin
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: 91.298
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3469
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: SOJBKDB12A67AD9922
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: TREJRVZ128F932732E
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: -1.70057201199
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: 1.84244440679
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: Apocalyptica
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: Life Burns!
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: 97.08
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3470
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: 3469
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: SOXJRUC12AB018A109
+2019-02-27 22:34:47.678 16925-16925/com.example.lofi I/DATASET: 1.70416465317
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: Tiago Iorc
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: Scared
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: 137.096
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3471
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: 101716087
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: SOOMATJ12AF72A410E
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: -1.72786013348
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: -1.10752367045
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: isis
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: 113.801
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3472
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: SOKUWEV12A8C13BBEB
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: TRDWTVM128F92EC39C
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: 0.815392789182
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: 0.662457175897
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: Montell Jordan
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: This Is How We Do It
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: 103.412
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3473
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: 104482262
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: SOHMLAZ12A8C143145
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: 0.37332522108000005
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: -0.9231506656209999
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: Jill Scott
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: Slowly Surely
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: 94.596
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: 104821496
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: SOMXIGU12AF72A02BA
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: TRXAJHG128F930E031
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: -1.9352498567900003
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: Gloria Gaynor
+2019-02-27 22:34:47.679 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3475
+2019-02-27 22:34:47.680 16925-16925/com.example.lofi I/DATASET: 3474
+2019-02-27 22:34:47.680 16925-16925/com.example.lofi I/DATASET: SOIJHHK12A8AE4658B
+2019-02-27 22:34:47.680 16925-16925/com.example.lofi I/DATASET: TRWTANS128F425BCD2
+2019-02-27 22:34:47.680 16925-16925/com.example.lofi I/DATASET: 0.37332522108000005
+2019-02-27 22:34:47.680 16925-16925/com.example.lofi I/DATASET: One More Chance
+2019-02-27 22:34:47.680 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3476
+2019-02-27 22:34:47.680 16925-16925/com.example.lofi I/DATASET: 3475
+2019-02-27 22:34:47.680 16925-16925/com.example.lofi I/DATASET: 105291346
+2019-02-27 22:34:47.680 16925-16925/com.example.lofi I/DATASET: SOWHWWQ12A8C13AAD0
+2019-02-27 22:34:47.680 16925-16925/com.example.lofi I/DATASET: TRFTZBR128F42635CA
+2019-02-27 22:34:47.680 16925-16925/com.example.lofi I/DATASET: Bauhaus
+2019-02-27 22:34:47.680 16925-16925/com.example.lofi I/DATASET: Rose Garden Funeral Of Sores
+2019-02-27 22:34:47.680 16925-16925/com.example.lofi I/DATASET: 84.944
+2019-02-27 22:34:47.680 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3477
+2019-02-27 22:34:47.680 16925-16925/com.example.lofi I/DATASET: 3476
+2019-02-27 22:34:47.680 16925-16925/com.example.lofi I/DATASET: SODUGDX12A81C21566
+2019-02-27 22:34:47.680 16925-16925/com.example.lofi I/DATASET: TRZFKYA128F932DC68
+2019-02-27 22:34:47.681 16925-16925/com.example.lofi I/DATASET: Why Bother At All
+2019-02-27 22:34:47.681 16925-16925/com.example.lofi I/DATASET: 165.194
+2019-02-27 22:34:47.681 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3479
+2019-02-27 22:34:47.681 16925-16925/com.example.lofi I/DATASET: SOWPCOX12A6D4FB67D
+2019-02-27 22:34:47.681 16925-16925/com.example.lofi I/DATASET: TRNZTWD128F429EBE2
+2019-02-27 22:34:47.681 16925-16925/com.example.lofi I/DATASET: -0.867374702562
+2019-02-27 22:34:47.681 16925-16925/com.example.lofi I/DATASET: -0.548258889135
+2019-02-27 22:34:47.681 16925-16925/com.example.lofi I/DATASET: 100.98
+2019-02-27 22:34:47.681 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3480
+2019-02-27 22:34:47.681 16925-16925/com.example.lofi I/DATASET: 3479
+2019-02-27 22:34:47.681 16925-16925/com.example.lofi I/DATASET: 105784710
+2019-02-27 22:34:47.681 16925-16925/com.example.lofi I/DATASET: -1.9352498567900003
+2019-02-27 22:34:47.681 16925-16925/com.example.lofi I/DATASET: -0.655809808621
+2019-02-27 22:34:47.681 16925-16925/com.example.lofi I/DATASET: Van Morrison
+2019-02-27 22:34:47.681 16925-16925/com.example.lofi I/DATASET: If You Only Knew
+2019-02-27 22:34:47.681 16925-16925/com.example.lofi I/DATASET: 90.801
+2019-02-27 22:34:47.681 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3481
+2019-02-27 22:34:47.681 16925-16925/com.example.lofi I/DATASET: 3480
+2019-02-27 22:34:47.681 16925-16925/com.example.lofi I/DATASET: TRQPJSV128F429405B
+2019-02-27 22:34:47.681 16925-16925/com.example.lofi I/DATASET: Van Morrison
+2019-02-27 22:34:47.681 16925-16925/com.example.lofi I/DATASET: Jackie Wilson Said (I'm In Heaven When You Smile)
+2019-02-27 22:34:47.681 16925-16925/com.example.lofi I/DATASET: 146.964
+2019-02-27 22:34:47.681 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3482
+2019-02-27 22:34:47.681 16925-16925/com.example.lofi I/DATASET: 3481
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: 105786598
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: SOQQFJQ12A8C13B06C
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: TROOHSN128F42747FD
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: 0.8468301807240001
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: Van Morrison
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: Oh The Warm Feeling
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3483
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: 3482
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: TRTQOTU128E0789689
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: 0.0158508295903
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: 0.390506993776
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: 136.398
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3484
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: 3483
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: 105847480
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: 0.736206377828
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: Van Morrison
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3485
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: 3484
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: 106828478
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: SOCYMCO12A8151D75E
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: TRCGAFV128F4232398
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: Beatsteaks
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: Jane Became Insane
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: 148.814
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: 3485
+2019-02-27 22:34:47.682 16925-16925/com.example.lofi I/DATASET: 106938368
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: SOJPAHD12AC9072A79
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: 0.957291020918
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: 0.390506993776
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: The Asteroids Galaxy Tour
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: The Sun Ain't Shining No More
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: 126.894
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3487
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: SOXKXKX12A8C144BB2
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: TRHONCM128F92EF7C9
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: -1.9352498567900003
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: -0.655809808621
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: New Order
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: Love Vigilantes
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: 135.73
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3488
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: 3487
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: TRJNUXC128F92EF7CC
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: -1.04019947199
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: -0.06581619317250001
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: New Order
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: This Time of Night
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: 3488
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: 108549274
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: SOTLIIT12AB017CE36
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: TRBDESF12903D01D4E
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: -1.05657234488
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: Demians
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: Shine
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: 160.098
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3490
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: 3489
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: TRSXBTG128F930C96B
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: -1.05657234488
+2019-02-27 22:34:47.683 16925-16925/com.example.lofi I/DATASET: 0.736206377828
+2019-02-27 22:34:47.684 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3491
+2019-02-27 22:34:47.684 16925-16925/com.example.lofi I/DATASET: 3490
+2019-02-27 22:34:47.684 16925-16925/com.example.lofi I/DATASET: SOEPJTX12A67AE23F7
+2019-02-27 22:34:47.684 16925-16925/com.example.lofi I/DATASET: -0.308877816114
+2019-02-27 22:34:47.684 16925-16925/com.example.lofi I/DATASET: -0.10269079413799999
+2019-02-27 22:34:47.684 16925-16925/com.example.lofi I/DATASET: Borknagar
+2019-02-27 22:34:47.684 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3492
+2019-02-27 22:34:47.684 16925-16925/com.example.lofi I/DATASET: 3491
+2019-02-27 22:34:47.684 16925-16925/com.example.lofi I/DATASET: 108564890
+2019-02-27 22:34:47.684 16925-16925/com.example.lofi I/DATASET: SOHPOIM12AB0179D57
+2019-02-27 22:34:47.684 16925-16925/com.example.lofi I/DATASET: TRAFIHX12903CF10CE
+2019-02-27 22:34:47.684 16925-16925/com.example.lofi I/DATASET: -0.308877816114
+2019-02-27 22:34:47.684 16925-16925/com.example.lofi I/DATASET: -0.10269079413799999
+2019-02-27 22:34:47.684 16925-16925/com.example.lofi I/DATASET: Icon Dreams
+2019-02-27 22:34:47.684 16925-16925/com.example.lofi I/DATASET: 3492
+2019-02-27 22:34:47.684 16925-16925/com.example.lofi I/DATASET: 108575328
+2019-02-27 22:34:47.684 16925-16925/com.example.lofi I/DATASET: SOACQEC12A8C13B4A8
+2019-02-27 22:34:47.684 16925-16925/com.example.lofi I/DATASET: -0.9231506656209999
+2019-02-27 22:34:47.684 16925-16925/com.example.lofi I/DATASET: Suicide Silence
+2019-02-27 22:34:47.684 16925-16925/com.example.lofi I/DATASET: Green Monster
+2019-02-27 22:34:47.684 16925-16925/com.example.lofi I/DATASET: 121.203
+2019-02-27 22:34:47.684 16925-16925/com.example.lofi I/DATASET: 108642984
+2019-02-27 22:34:47.684 16925-16925/com.example.lofi I/DATASET: SOPYYVJ12A6D4F838E
+2019-02-27 22:34:47.684 16925-16925/com.example.lofi I/DATASET: TRHWGGV128F1461C2B
+2019-02-27 22:34:47.684 16925-16925/com.example.lofi I/DATASET: -0.0159853121436
+2019-02-27 22:34:47.684 16925-16925/com.example.lofi I/DATASET: Turisas
+2019-02-27 22:34:47.685 16925-16925/com.example.lofi I/DATASET: One More
+2019-02-27 22:34:47.685 16925-16925/com.example.lofi I/DATASET: 120.395
+2019-02-27 22:34:47.685 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3495
+2019-02-27 22:34:47.685 16925-16925/com.example.lofi I/DATASET: SOCGYNA12A67ADE90F
+2019-02-27 22:34:47.685 16925-16925/com.example.lofi I/DATASET: TRZMFYX12903CF1E1B
+2019-02-27 22:34:47.685 16925-16925/com.example.lofi I/DATASET: -1.5586737802500001
+2019-02-27 22:34:47.685 16925-16925/com.example.lofi I/DATASET: 1.56588489955
+2019-02-27 22:34:47.685 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3496
+2019-02-27 22:34:47.685 16925-16925/com.example.lofi I/DATASET: 3495
+2019-02-27 22:34:47.685 16925-16925/com.example.lofi I/DATASET: 109168318
+2019-02-27 22:34:47.685 16925-16925/com.example.lofi I/DATASET: SOHBDBU12AF72A4C8C
+2019-02-27 22:34:47.685 16925-16925/com.example.lofi I/DATASET: Jefferson Airplane
+2019-02-27 22:34:47.685 16925-16925/com.example.lofi I/DATASET: Wooden Ships
+2019-02-27 22:34:47.685 16925-16925/com.example.lofi I/DATASET: 84.33
+2019-02-27 22:34:47.685 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3497
+2019-02-27 22:34:47.685 16925-16925/com.example.lofi I/DATASET: 3496
+2019-02-27 22:34:47.685 16925-16925/com.example.lofi I/DATASET: SODHVES12A6701CE6B
+2019-02-27 22:34:47.685 16925-16925/com.example.lofi I/DATASET: TRAAEEH128E0795DFE
+2019-02-27 22:34:47.685 16925-16925/com.example.lofi I/DATASET: 1.0719011311700002
+2019-02-27 22:34:47.685 16925-16925/com.example.lofi I/DATASET: Chris Rea
+2019-02-27 22:34:47.685 16925-16925/com.example.lofi I/DATASET: Driving Home For Christmas
+2019-02-27 22:34:47.685 16925-16925/com.example.lofi I/DATASET: 3497
+2019-02-27 22:34:47.685 16925-16925/com.example.lofi I/DATASET: 110148910
+2019-02-27 22:34:47.685 16925-16925/com.example.lofi I/DATASET: SOQOMWA12A8AE46A18
+2019-02-27 22:34:47.685 16925-16925/com.example.lofi I/DATASET: 1.3993585890200002
+2019-02-27 22:34:47.685 16925-16925/com.example.lofi I/DATASET: 1.39533987009
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: Altered Images
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: Don't Talk To Me About Love
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: 122.674
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3499
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: 3498
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: 110241610
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: -0.789480237121
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: Lunik
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: Through Your Eyes
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: 163.29
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3500
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: 3499
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: TRTNUJS128F42807C9
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: -1.04838590843
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: Lunik
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: Summer's Gone
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: 160.019
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: 3500
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: SOGWIWR12A8C139411
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: TRIKLDP128F427207F
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: 0.678952181743
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: Lunik
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: What You Are
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: 88.033
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3502
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: 3501
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: TRSFGTK128F4283976
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: -1.2293971143
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: David Bowie
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: Something In The Air
+2019-02-27 22:34:47.686 16925-16925/com.example.lofi I/DATASET: 162.951
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3503
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: 111406300
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: SOQCNSK12AB01823EA
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: TRCXWDN128F9318505
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: -0.87283232686
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: Telling Stories
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3504
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: 3503
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: 112658740
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: 0.37332522108000005
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: -0.9231506656209999
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: A Tribe Called Quest
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: After Hours
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: 3504
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: 112658762
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: SOSSQXZ12A8AE4696E
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: TRTLELX12903CB9AB7
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: 0.37332522108000005
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: A Tribe Called Quest
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: 108.024
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3506
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: 3505
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: 112979012
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: SOGYCGY12AB018056C
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: -0.461691296446
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: Sibylle Baier
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: Tonight
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: 118.529
+2019-02-27 22:34:47.687 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3507
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: SOHPWEF12AB0180573
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: TRNRWTI128F930BCE2
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: -0.34162356189900006
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: 0.505740121793
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: The End
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: 94.927
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3508
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: 3507
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: 113387150
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: -0.85464024587
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: 0.7177690773450001
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: Samael
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: Baphomet's Throne
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: 85.667
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3509
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: 3508
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: SOVQTDQ12A6BD5576F
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: TRZTDDW12903CF423C
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: -0.10269079413799999
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: Into The Pentagram
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: 71.327
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3510
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: 3509
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: 113398772
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: SOICSEW12AC4688D1D
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: TRKIVZW12903CF273F
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: Sworn Enemy
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: We Hate
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: 179.186
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: 3510
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: SOACEJK12A8C136E19
+2019-02-27 22:34:47.688 16925-16925/com.example.lofi I/DATASET: 1.1783248049700001
+2019-02-27 22:34:47.689 16925-16925/com.example.lofi I/DATASET: 1.18331091453
+2019-02-27 22:34:47.689 16925-16925/com.example.lofi I/DATASET: 146.731
+2019-02-27 22:34:47.689 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3512
+2019-02-27 22:34:47.689 16925-16925/com.example.lofi I/DATASET: 3511
+2019-02-27 22:34:47.689 16925-16925/com.example.lofi I/DATASET: 114388306
+2019-02-27 22:34:47.689 16925-16925/com.example.lofi I/DATASET: TRQOBCM128F428EA6E
+2019-02-27 22:34:47.689 16925-16925/com.example.lofi I/DATASET: 0.37332522108000005
+2019-02-27 22:34:47.689 16925-16925/com.example.lofi I/DATASET: -0.9231506656209999
+2019-02-27 22:34:47.689 16925-16925/com.example.lofi I/DATASET: Van Morrison
+2019-02-27 22:34:47.689 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3513
+2019-02-27 22:34:47.689 16925-16925/com.example.lofi I/DATASET: 3512
+2019-02-27 22:34:47.689 16925-16925/com.example.lofi I/DATASET: 114388348
+2019-02-27 22:34:47.689 16925-16925/com.example.lofi I/DATASET: SOVDDUT12A8C13B81D
+2019-02-27 22:34:47.689 16925-16925/com.example.lofi I/DATASET: TRHSGAZ128F428EA74
+2019-02-27 22:34:47.689 16925-16925/com.example.lofi I/DATASET: 0.662457175897
+2019-02-27 22:34:47.689 16925-16925/com.example.lofi I/DATASET: Van Morrison
+2019-02-27 22:34:47.689 16925-16925/com.example.lofi I/DATASET: 131.001
+2019-02-27 22:34:47.689 16925-16925/com.example.lofi I/DATASET: !!!!! Song #3514
+2019-02-27 22:34:47.689 16925-16925/com.example.lofi I/DATASET: 124220546
+2019-02-27 22:34:47.689 16925-16925/com.example.lofi I/DATASET: SOVUMDZ12A8C13E621
+2019-02-27 22:34:47.689 16925-16925/com.example.lofi I/DATASET: 1.07115066993
+2019-02-27 22:34:47.689 16925-16925/com.example.lofi I/DATASET: Clear Vu
+2019-02-27 22:34:47.689 16925-16925/com.example.lofi I/DATASET: I Adore
+2019-02-27 22:34:47.689 16925-16925/com.example.lofi I/DATASET: 145.029

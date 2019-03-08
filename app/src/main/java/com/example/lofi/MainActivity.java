@@ -335,7 +335,7 @@ public class MainActivity extends AppCompatActivity{
 
     /* TODO:
     implement active/non-active mode detection
-    implement different recommendation functions depending on mode 
+    implement different recommendation functions depending on mode
      */
 
 }

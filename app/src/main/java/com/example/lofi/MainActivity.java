@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity{
     private double[] strides = new double[STRIDES_PER_CALC];
     // make effective stride rate average of last STRIDES_PER_CALC stride rates
     private int numStrides = 0; // increment on each new step
+    private double effectiveStrideRate;
 
     public double getMean(double[] vals) {
         int num = vals.length;
@@ -123,6 +124,8 @@ public class MainActivity extends AppCompatActivity{
                         activity2p_tv.setTextColor(Color.BLACK);
                         activity3p_tv.setTextColor(Color.BLACK);
                         activity4p_tv.setTextColor(Color.BLACK);
+                        stateMachine.update(0);
+
                     } else if (outputProbabilities[0][1] >= outputProbabilities[0][0] &&
                             outputProbabilities[0][1] >= outputProbabilities[0][2] &&
                             outputProbabilities[0][1] >= outputProbabilities[0][3]) {
@@ -130,6 +133,8 @@ public class MainActivity extends AppCompatActivity{
                         activity2p_tv.setTextColor(Color.RED);
                         activity3p_tv.setTextColor(Color.BLACK);
                         activity4p_tv.setTextColor(Color.BLACK);
+                        stateMachine.update(1);
+
                     } else if (outputProbabilities[0][2] >= outputProbabilities[0][0] &&
                             outputProbabilities[0][2] >= outputProbabilities[0][1] &&
                             outputProbabilities[0][2] >= outputProbabilities[0][3]) {
@@ -137,12 +142,27 @@ public class MainActivity extends AppCompatActivity{
                         activity2p_tv.setTextColor(Color.BLACK);
                         activity3p_tv.setTextColor(Color.RED);
                         activity4p_tv.setTextColor(Color.BLACK);
+                        stateMachine.update(1);
+
                     } else {
                         activity1p_tv.setTextColor(Color.BLACK);
                         activity2p_tv.setTextColor(Color.BLACK);
                         activity3p_tv.setTextColor(Color.BLACK);
                         activity4p_tv.setTextColor(Color.RED);
+                        stateMachine.update(0);
+
                     }
+
+                    TextView activity_state = findViewById(R.id.activity_state);
+
+                    if (stateMachine.state == 0) {
+                        activity_state.setText("non-active");
+                    }
+
+                    else {
+                        activity_state.setText("active");
+                    }
+
                 }
             }
 
@@ -166,7 +186,7 @@ public class MainActivity extends AppCompatActivity{
                 strides[numStrides++] = strideRate;
 
                 if (numStrides == STRIDES_PER_CALC) {
-                    double effectiveStrideRate = getMean(strides);
+                    effectiveStrideRate = getMean(strides);
                     TextView eff_stride_tv = findViewById(R.id.eff_stride);
                     String toEff_stride_tv = "Effective stride rate: " + String.format("%.2f", effectiveStrideRate) + " s/m";
                     eff_stride_tv.setText(toEff_stride_tv);
@@ -192,6 +212,7 @@ public class MainActivity extends AppCompatActivity{
 
     private ActivityRecognizer activityRecognizer;
     private MusicRecommender musicRecommender;
+    private StateMachine stateMachine;
 
     private final static int K = 5;
 
@@ -262,15 +283,16 @@ public class MainActivity extends AppCompatActivity{
             public void onClick(View v) {
                 boolean valenceGiven = input_valence.getText().toString().trim().length() > 0;
                 boolean arousalGiven = input_arousal.getText().toString().trim().length() > 0;
-                boolean strideGiven = input_stride.getText().toString().trim().length() > 0;
+                //boolean strideGiven = input_stride.getText().toString().trim().length() > 0;
                 float thisValence = 0.0f;
                 float thisArousal = 0.0f;
-                float thisStride = 0.0f;
+                //float thisStride = 0.0f;
 
                 if (valenceGiven) thisValence = Float.parseFloat(input_valence.getText().toString());
                 if (arousalGiven) thisArousal = Float.parseFloat(input_arousal.getText().toString());
-                if (strideGiven)  thisStride = Float.parseFloat(input_stride.getText().toString());
+                //if (strideGiven)  thisStride = Float.parseFloat(input_stride.getText().toString());
 
+                float thisStride = (float)effectiveStrideRate;
 
                 TextView rec1 = findViewById(R.id.rec1);
                 TextView rec2 = findViewById(R.id.rec2);
@@ -280,8 +302,8 @@ public class MainActivity extends AppCompatActivity{
 
                 TextView[] recs = {rec1, rec2, rec3, rec4, rec5};
 
-                // If no stride rate given, search based on VA
-                if (!strideGiven) {
+                // If non-active, search based on VA
+                if (stateMachine.state == 0) {
                     Song[] recommendations = musicRecommender.knn(K, thisValence, thisArousal);
                     for (int i = 0; i < K; i++) {
                         String toTextView = "";
@@ -294,7 +316,7 @@ public class MainActivity extends AppCompatActivity{
 
                 // If stride rate given, search based on stride only (for now)
                 else {
-                    Song[] recommendations = musicRecommender.knn(K, thisStride);
+                    Song[] recommendations = musicRecommender.knn(K, thisValence, thisArousal, thisStride);
                     for (int i = 0; i < K; i++) {
                         String toTextView = "";
                         toTextView += recommendations[i].artist + " - " + recommendations[i].title + " (T = " +
@@ -305,6 +327,8 @@ public class MainActivity extends AppCompatActivity{
             }
                                      });
 
+
+        stateMachine = new StateMachine();
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 

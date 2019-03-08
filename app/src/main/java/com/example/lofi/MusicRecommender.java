@@ -24,6 +24,14 @@ public class MusicRecommender {
     //protected List<Song> database;
     protected Map<String, Song> db;
 
+    // Weights, biases for distance metric
+    protected static double alpha = 1.0;
+    protected static double beta = 1.0;
+    protected static double gamma = 3.0;
+
+    protected static double v_bias = 0.0;
+    protected static double a_bias = 0.0;
+
     public MusicRecommender(Activity activity) throws IOException {
 
         //database = new ArrayList<Song>();
@@ -95,8 +103,6 @@ public class MusicRecommender {
         /* Given valence and arousal, find the k nearest neighbors (songs) in the VA space,
          * return a Song[] of k closest songs. */
         Song[] result = new Song[k];
-        //Map<Float, String> distanceMap = new HashMap<>();
-        //List<Float> distances = new ArrayList<>();
         Map<Double, String> distanceMap = new HashMap<>();
         List<Double> distances = new ArrayList<>();
 
@@ -113,7 +119,7 @@ public class MusicRecommender {
             double song_a = (double)song.a;
 
             //distance = (float)Math.hypot(vv - song_v, aa - song_a);
-            distance = Math.hypot(vv - song_v, aa - song_a);
+            distance = Math.hypot(alpha*(vv - song_v), beta*(aa - song_a));
 
             // if there are duplicate distances
             if (distanceMap.containsKey(distance)) {
@@ -136,12 +142,9 @@ public class MusicRecommender {
         Collections.sort(distances);
 
         // Extract k closest
-        //Log.i("KNN", "Size of distances array " + distances.size());
         for (int i = 0; i < k; i++) {
             String trackID = distanceMap.get(distances.get(i));
             result[i] = db.get(trackID);
-            //Log.i("KNN", "ID: " + result[i].trackID);
-            //Log.i("KNN", "V: " + result[i].v)
         }
 
 
@@ -155,10 +158,60 @@ public class MusicRecommender {
          * return a Song[] of k closest songs. */
         Song[] result = new Song[k];
 
+        Map<Double, String> distanceMap = new HashMap<>();
+        List<Double> distances = new ArrayList<>();
+
+        //float distance;
+        double distance;
+        double vv = (double)v;
+        double aa = (double)a;
+        double tt = (double)t;
+
+        // Calculate distances
+        for (Map.Entry<String, Song> entry : db.entrySet()) {
+            String key = entry.getKey();
+            Song song = entry.getValue();
+            double song_v = (double)song.v;
+            double song_a = (double)song.a;
+            double song_t = (double)song.t;
+
+            //distance = (float)Math.hypot(vv - song_v, aa - song_a);
+            distance = Math.sqrt(Math.pow(alpha*(vv - song_v), 2) +
+                                 Math.pow(beta*(aa - song_a), 2) +
+                                 Math.pow(gamma*(tt - song_t) + v_bias + a_bias, 2));
+
+
+
+            // if there are duplicate distances
+            if (distanceMap.containsKey(distance)) {
+                double newDistance = distance + 0.001;
+                while (distanceMap.containsKey(newDistance)) {
+                    newDistance += 0.001;
+                }
+                distanceMap.put(newDistance, key);
+                distances.add(newDistance);
+            }
+            else {
+                distanceMap.put(distance, key);
+                distances.add(distance);
+            }
+
+
+        }
+
+        // Sort
+        Collections.sort(distances);
+
+        // Extract k closest
+        for (int i = 0; i < k; i++) {
+            String trackID = distanceMap.get(distances.get(i));
+            result[i] = db.get(trackID);
+        }
 
         return result;
     }
 
+    // for debugging only.
     public Song[] knn(int k, float t) {
         Song[] result = new Song[k];
 

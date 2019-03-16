@@ -2,30 +2,31 @@
 <instant-run
     abi="arm64-v8a,armeabi-v7a,armeabi"
     api-level="26"
-    build-mode="HOT_WARM"
+    build-mode="COLD"
     density="xxxhdpi"
     format="10"
+    ir-eligibility="FIELD_TYPE_CHANGE"
     plugin-version="3.3.1"
-    timestamp="1552709393205"
+    timestamp="1552712981715"
     token="-3824788606391121383"
-    verifier="COMPATIBLE" >
+    verifier="COLD_SWAP_REQUESTED" >
 
     <task
         name="javac"
-        duration="161" />
+        duration="246" />
     <task
         name="instant-run-dex"
-        duration="32" />
+        duration="0" />
     <task
         name="instant-run-transform"
-        duration="50" />
+        duration="36" />
     <task
         name="verifier"
-        duration="4" />
+        duration="11" />
 
     <artifact
-        location="C:\Users\Carlo\Desktop\grad\2-winter2019\ee202\project\LOFI\app\build\intermediates\reload-dex\debug\classes.dex"
-        type="RELOAD_DEX" />
+        location="C:\Users\Carlo\Desktop\grad\2-winter2019\ee202\project\LOFI\app\build\intermediates\split-apk\debug\slices\slice_7.apk"
+        type="SPLIT" />
 
     <build
         build-mode="FULL"
@@ -112,27 +113,11 @@
     <build
         build-mode="COLD"
         ir-eligibility="FIELD_TYPE_CHANGE"
-        timestamp="1552709187134"
+        timestamp="1552712981715"
         verifier="COLD_SWAP_REQUESTED" >
         <artifact
             location="C:\Users\Carlo\Desktop\grad\2-winter2019\ee202\project\LOFI\app\build\intermediates\split-apk\debug\slices\slice_7.apk"
             type="SPLIT" />
-    </build>
-    <build
-        build-mode="HOT_WARM"
-        timestamp="1552709352308"
-        verifier="COMPATIBLE" >
-        <artifact
-            location="C:\Users\Carlo\Desktop\grad\2-winter2019\ee202\project\LOFI\app\build\intermediates\builds\debug\1552709352308\classes.dex"
-            type="RELOAD_DEX" />
-    </build>
-    <build
-        build-mode="HOT_WARM"
-        timestamp="1552709393205"
-        verifier="COMPATIBLE" >
-        <artifact
-            location="C:\Users\Carlo\Desktop\grad\2-winter2019\ee202\project\LOFI\app\build\intermediates\reload-dex\debug\classes.dex"
-            type="RELOAD_DEX" />
     </build>
 
 </instant-run>

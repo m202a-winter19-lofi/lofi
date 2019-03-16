@@ -1,5 +1,6 @@
 package com.example.lofi;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.hardware.Sensor;
@@ -366,10 +367,11 @@ public class MainActivity extends AppCompatActivity{
 
         final TextView retrieved_VA_tv = findViewById(R.id.retrieved_VA);
         Button get_http_btn = findViewById(R.id.get_http);
-        final AsyncTask<String, Void, String> myTask = new GetFromSite(this);
+        final Activity thisActivity = this;
 
         get_http_btn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
+                final AsyncTask<String, Void, String> myTask = new GetFromSite(thisActivity);
 
                 //String VA =
                 myTask.execute(site_url);

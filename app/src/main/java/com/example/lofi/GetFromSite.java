@@ -41,6 +41,7 @@ public class GetFromSite extends AsyncTask<String, Void, String> {
             while ((line = input.readLine()) != null) {
                 result += line;
             }
+            siteISR.close();
         }
         catch (Exception e) {
             Log.e("URL", "Failed to open stream to site, " + e.toString());

@@ -6,6 +6,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -19,15 +20,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
 import java.io.Console;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.io.InputStreamReader;
 import java.lang.Math;
 import android.view.View.OnClickListener;
 
-
-
+import java.net.*;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -45,6 +47,41 @@ public class MainActivity extends AppCompatActivity{
     // make effective stride rate average of last STRIDES_PER_CALC stride rates
     private int numStrides = 0; // increment on each new step
     private double effectiveStrideRate;
+
+    // Fetch from http site cherrypy
+    public String site_url = "http://192.168.43.194:8080/";//"169.254.14.4:8080"; //
+
+    /*
+    public String get_VA() {
+        String result = "";
+        String line;
+        BufferedReader input;
+        URL site;
+
+        try {
+            Log.e("URL", "About to initialize URL");
+            site = new URL(site_url);
+            Log.e("URL", "Initialized URL. Initializing Input stream");
+            InputStream siteStream = site.openStream();
+            Log.e("URL", "Initialized input stream. Initializing Input stream reader");
+            InputStreamReader siteISR = new InputStreamReader(siteStream);
+            Log.e("URL", "Initialized input stream reader. Initializing buffered reader");
+            input = new BufferedReader(siteISR);
+
+            Log.e("URL", "Initialized BufferedReader.");
+            while ((line = input.readLine()) != null) {
+                result += line;
+            }
+        }
+        catch (Exception e) {
+            Log.e("URL", "Failed to open stream to site, " + e.toString());
+        }
+
+
+
+        return result;
+    }
+    */
 
     public double getMean(double[] vals) {
         int num = vals.length;
@@ -326,6 +363,20 @@ public class MainActivity extends AppCompatActivity{
                 }
             }
                                      });
+
+        final TextView retrieved_VA_tv = findViewById(R.id.retrieved_VA);
+        Button get_http_btn = findViewById(R.id.get_http);
+        final AsyncTask<String, Void, String> myTask = new GetFromSite(this);
+
+        get_http_btn.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+
+                //String VA =
+                myTask.execute(site_url);
+                //retrieved_VA_tv.setText(VA);
+
+            }
+        });
 
 
         stateMachine = new StateMachine();

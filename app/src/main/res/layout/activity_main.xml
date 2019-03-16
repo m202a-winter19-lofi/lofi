@@ -201,4 +201,23 @@
         android:layout_below="@+id/eff_stride"
         android:textSize="28sp"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/get_http"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/activity_state"
+        android:text="GET VA"/>
+
+    <TextView
+        android:id="@+id/retrieved_VA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(VA appears here)"
+        android:textColor="#000000"
+        android:textAlignment="textEnd"
+        android:layout_below="@+id/activity_state"
+        android:layout_toStartOf="@+id/get_http"
+        android:textSize="24sp"/>
+
 </RelativeLayout>

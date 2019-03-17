@@ -28,16 +28,16 @@ public class GetFromSite extends AsyncTask<String, Void, String> {
 
 
         try {
-            Log.e("URL", "About to initialize URL");
+            Log.d("URL", "About to initialize URL");
             site = new URL(site_urls[0]);
-            Log.e("URL", "Initialized URL. Initializing Input stream");
+            Log.d("URL", "Initialized URL. Initializing Input stream");
             InputStream siteStream = site.openStream();
-            Log.e("URL", "Initialized input stream. Initializing Input stream reader");
+            Log.d("URL", "Initialized input stream. Initializing Input stream reader");
             siteISR = new InputStreamReader(siteStream);
-            Log.e("URL", "Initialized input stream reader. Initializing buffered reader");
+            Log.d("URL", "Initialized input stream reader. Initializing buffered reader");
             input = new BufferedReader(siteISR);
 
-            Log.e("URL", "Initialized BufferedReader.");
+            Log.d("URL", "(DONE!) Initialized BufferedReader.");
             while ((line = input.readLine()) != null) {
                 result += line;
             }

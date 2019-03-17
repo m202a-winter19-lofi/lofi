@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity{
 
     // Fetch from http site cherrypy
     public String site_url = "http://192.168.43.194:8080/";//"169.254.14.4:8080"; //
+    public String valFrom_retrieved_VA_tv;
 
     /*
     public String get_VA() {
@@ -372,10 +373,33 @@ public class MainActivity extends AppCompatActivity{
         get_http_btn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 final AsyncTask<String, Void, String> myTask = new GetFromSite(thisActivity);
-
-                //String VA =
                 myTask.execute(site_url);
-                //retrieved_VA_tv.setText(VA);
+                setVA(retrieved_VA_tv.getText().toString());
+                retrieved_VA_tv.setText(getVA());
+                Log.e("DEBUG", "VA value is " + getVA());
+                int VA;
+                try {
+                    VA = Integer.parseInt(getVA());
+                    switch (VA) {
+                        case 0:
+                            // stuff
+                            break;
+                        case 1:
+                            // stuff
+                            break;
+                        case 2:
+                            // stuff
+                            break;
+                        case 3:
+                            // stuff
+                            break;
+                        default:
+                            // stuff
+                    }
+                }
+                catch (Exception e) {
+                    Log.e("DEBUG VA", "VA value parse failed, " + e.toString());
+                }
 
             }
         });
@@ -407,6 +431,14 @@ public class MainActivity extends AppCompatActivity{
 
         zeroStrideArray();
 
+    }
+
+    public void setVA(String VA) {
+        valFrom_retrieved_VA_tv = VA;
+    }
+
+    public String getVA() {
+        return valFrom_retrieved_VA_tv;
     }
 
 

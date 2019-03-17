@@ -53,37 +53,30 @@ public class MainActivity extends AppCompatActivity{
     public String site_url = "http://192.168.43.194:8080/";//"169.254.14.4:8080"; //
     public String valFrom_retrieved_VA_tv;
 
-    /*
-    public String get_VA() {
-        String result = "";
-        String line;
-        BufferedReader input;
-        URL site;
+    // Key points for quadrant-based approximation
+    public int kp_rows = 5;
+    public int kp_cols = 5;
+    public float[][][] key_points = new float[kp_rows][kp_cols][2]; // num rows by num cols by V,A
 
-        try {
-            Log.e("URL", "About to initialize URL");
-            site = new URL(site_url);
-            Log.e("URL", "Initialized URL. Initializing Input stream");
-            InputStream siteStream = site.openStream();
-            Log.e("URL", "Initialized input stream. Initializing Input stream reader");
-            InputStreamReader siteISR = new InputStreamReader(siteStream);
-            Log.e("URL", "Initialized input stream reader. Initializing buffered reader");
-            input = new BufferedReader(siteISR);
+    public float v_begin = -1.5f;
+    public float a_begin = 1.5f;
+    public float va_increment = 0.75f; // how much to change each adjacent element by
 
-            Log.e("URL", "Initialized BufferedReader.");
-            while ((line = input.readLine()) != null) {
-                result += line;
+    // "Global" VA
+    public float v_global;
+    public float a_global;
+    public float t_global;
+
+    // Populate key_points array
+    public void populateKeyPoints() {
+        for (int i = 0; i < kp_rows; i++) {
+            for (int j = 0; j < kp_cols; j++) {
+                key_points[i][j][0] = v_begin + j*va_increment;
+                key_points[i][j][1] = a_begin - i*va_increment;
+                //Log.e("VA", Float.toString(key_points[i][j][0]) + " " + Float.toString(key_points[i][j][1]));
             }
         }
-        catch (Exception e) {
-            Log.e("URL", "Failed to open stream to site, " + e.toString());
-        }
-
-
-
-        return result;
     }
-    */
 
     public double getMean(double[] vals) {
         int num = vals.length;
@@ -260,6 +253,8 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        populateKeyPoints();
+
         activityRecognizer = new ActivityRecognizer(this);
 
         TextView activity1_tv = findViewById(R.id.activity1);
@@ -346,19 +341,20 @@ public class MainActivity extends AppCompatActivity{
                     Song[] recommendations = musicRecommender.knn(K, thisValence, thisArousal);
                     for (int i = 0; i < K; i++) {
                         String toTextView = "";
-                        toTextView += recommendations[i].artist + " - " + recommendations[i].title + " (V = " +
-                                String.format("%.2f", recommendations[i].v) + ", A = " +
+                        toTextView += recommendations[i].artist + " - " + recommendations[i].title + " (V " +
+                                String.format("%.2f", recommendations[i].v) + ", A " +
                                 String.format("%.2f", recommendations[i].a) + ")";
                         recs[i].setText(toTextView);
                     }
                 }
 
-                // If stride rate given, search based on stride only (for now)
                 else {
                     Song[] recommendations = musicRecommender.knn(K, thisValence, thisArousal, thisStride);
                     for (int i = 0; i < K; i++) {
                         String toTextView = "";
-                        toTextView += recommendations[i].artist + " - " + recommendations[i].title + " (T = " +
+                        toTextView += recommendations[i].artist + " - " + recommendations[i].title + " (V " +
+                                String.format("%.2f", recommendations[i].v) + ", A " +
+                                String.format("%.2f", recommendations[i].a) + ", T " +
                                 String.format("%.2f", recommendations[i].t) + ")";
                         recs[i].setText(toTextView);
                     }
@@ -366,6 +362,7 @@ public class MainActivity extends AppCompatActivity{
             }
                                      });
 
+        // Get VA from the Pi-hosted site
         final TextView retrieved_VA_tv = findViewById(R.id.retrieved_VA);
         Button get_http_btn = findViewById(R.id.get_http);
         final Activity thisActivity = this;
@@ -377,28 +374,46 @@ public class MainActivity extends AppCompatActivity{
                 setVA(retrieved_VA_tv.getText().toString());
                 retrieved_VA_tv.setText(getVA());
                 Log.e("DEBUG", "VA value is " + getVA());
-                int VA;
-                try {
-                    VA = Integer.parseInt(getVA());
-                    switch (VA) {
-                        case 0:
-                            // stuff
-                            break;
-                        case 1:
-                            // stuff
-                            break;
-                        case 2:
-                            // stuff
-                            break;
-                        case 3:
-                            // stuff
-                            break;
-                        default:
-                            // stuff
+
+                int VA = Integer.parseInt(getVA());
+                int thisRow = (VA / 10) - 1;
+                int thisCol = (VA % 10) - 1;
+
+                float thisValence = key_points[thisRow][thisCol][0];
+                float thisArousal = key_points[thisRow][thisCol][1];
+
+                float thisStride = (float)effectiveStrideRate;
+
+                TextView rec1 = findViewById(R.id.rec1);
+                TextView rec2 = findViewById(R.id.rec2);
+                TextView rec3 = findViewById(R.id.rec3);
+                TextView rec4 = findViewById(R.id.rec4);
+                TextView rec5 = findViewById(R.id.rec5);
+
+                TextView[] recs = {rec1, rec2, rec3, rec4, rec5};
+
+                // If non-active, search based on VA
+                if (stateMachine.state == 0) {
+                    Song[] recommendations = musicRecommender.knn(K, thisValence, thisArousal);
+                    for (int i = 0; i < K; i++) {
+                        String toTextView = "";
+                        toTextView += recommendations[i].artist + " - " + recommendations[i].title + " (V " +
+                                String.format("%.2f", recommendations[i].v) + ", A " +
+                                String.format("%.2f", recommendations[i].a) + ")";
+                        recs[i].setText(toTextView);
                     }
                 }
-                catch (Exception e) {
-                    Log.e("DEBUG VA", "VA value parse failed, " + e.toString());
+
+                else {
+                    Song[] recommendations = musicRecommender.knn(K, thisValence, thisArousal, thisStride);
+                    for (int i = 0; i < K; i++) {
+                        String toTextView = "";
+                        toTextView += recommendations[i].artist + " - " + recommendations[i].title + " (V " +
+                                String.format("%.2f", recommendations[i].v) + ", A " +
+                                String.format("%.2f", recommendations[i].a) + ", T " +
+                                String.format("%.2f", recommendations[i].t) + ")";
+                        recs[i].setText(toTextView);
+                    }
                 }
 
             }

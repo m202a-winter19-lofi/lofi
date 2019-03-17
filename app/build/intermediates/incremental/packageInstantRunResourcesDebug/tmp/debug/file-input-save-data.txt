@@ -1,11 +1,15 @@
 #Internal package file, do not edit.
-#Wed Feb 27 22:03:47 PST 2019
+#Sat Mar 16 23:06:53 PDT 2019
 1.base=C\:\\Users\\Carlo\\Desktop\\grad\\2-winter2019\\ee202\\project\\LOFI\\app\\build\\intermediates\\merged_assets\\debug\\mergeDebugAssets\\out
+2.path=merged_dataset.csv
 0.baseType=DIRECTORY
+2.base=C\:\\Users\\Carlo\\Desktop\\grad\\2-winter2019\\ee202\\project\\LOFI\\app\\build\\intermediates\\merged_assets\\debug\\mergeDebugAssets\\out
+2.set=ASSET
 1.baseType=DIRECTORY
-count=2
+count=3
 1.set=ASSET
 0.path=activity_recognizer_4.tflite
 0.set=ASSET
 0.base=C\:\\Users\\Carlo\\Desktop\\grad\\2-winter2019\\ee202\\project\\LOFI\\app\\build\\intermediates\\merged_assets\\debug\\mergeDebugAssets\\out
-1.path=merged_dataset.csv
+2.baseType=DIRECTORY
+1.path=merged_dataset_trimmed.csv

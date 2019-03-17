@@ -213,7 +213,7 @@
         android:id="@+id/retrieved_VA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="(VA appears here)"
+        android:text="33"
         android:textColor="#000000"
         android:textAlignment="textEnd"
         android:layout_below="@+id/activity_state"

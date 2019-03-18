@@ -47,10 +47,11 @@ public class MainActivity extends AppCompatActivity{
     private double[] strides = new double[STRIDES_PER_CALC];
     // make effective stride rate average of last STRIDES_PER_CALC stride rates
     private int numStrides = 0; // increment on each new step
-    private double effectiveStrideRate;
+    private double effectiveStrideRate = 0.0;
 
     // Fetch from http site cherrypy
-    public String site_url = "http://192.168.43.194:8080/";//"169.254.14.4:8080"; //
+    public String site_url = "http://192.168.43.194:8080/"; //"http://172.16.17.49:8080/";
+    //"http://192.168.43.194:8080/";//"http://169.254.14.4:8080/"; //
     public String valFrom_retrieved_VA_tv;
 
     // Key points for quadrant-based approximation
@@ -62,10 +63,13 @@ public class MainActivity extends AppCompatActivity{
     public float a_begin = 1.5f;
     public float va_increment = 0.75f; // how much to change each adjacent element by
 
-    // "Global" VA
+    // "Global" VA and button adjustment values
     public float v_global;
     public float a_global;
     public float t_global;
+    public float v_adjust = 0.05f;
+    public float a_adjust = 0.05f;
+    public float t_adjust = 2.0f;
 
     // Populate key_points array
     public void populateKeyPoints() {
@@ -105,40 +109,13 @@ public class MainActivity extends AppCompatActivity{
                 if (activityRecognizer.num_samples_in_this_window == NUM_SAMPLES_PER_WINDOW) {
                     float[][] standardizedWindow = activityRecognizer.standardize(inputWindow);
 
-                /*
-                Log.i("INPUT_DEBUG", "Before standardization");
-                Log.i("INPUT_DEBUG", Float.toString(inputWindow[0][0]) + " " +
-                        Float.toString(inputWindow[0][1]) + " " + Float.toString(inputWindow[0][2]));
-                Log.i("INPUT_DEBUG", "After standardization");
-                Log.i("INPUT_DEBUG", Float.toString(activityRecognizer.inputWindow[0][0]) + " " +
-                        Float.toString(activityRecognizer.inputWindow[0][1]) + " " +
-                        Float.toString(activityRecognizer.inputWindow[0][2]));
-                */
-
                     activityRecognizer.setInputWindow(standardizedWindow);
-
-                /*
-                for (int i = 0; i < NUM_SAMPLES_PER_WINDOW; i ++) {
-                    Log.i("INPUT_DEBUG", Integer.toString(i));
-                    for (int j = 0; j < NUM_AXES; j++) {
-                        Log.i("INPUT_DEBUG", Float.toString(inputWindow[i][j]));
-                    }
-                }
-                */
-
 
                     //Log.i("DEBUG", "About to run inference");
                     activityRecognizer.runInference();
                     //Log.i("DEBUG", "Ran inference, getting probabilities");
                     outputProbabilities = activityRecognizer.getOutputProbabilities();
                     //Log.i("DEBUG", "Got probabilities, displaying");
-
-
-                /*
-                for (int i = 0; i < NUM_OUTPUTS; i++) {
-                    Log.i("OUTPUT_DEBUG", Float.toString(outputProbabilities[0][i]));
-                }
-                */
 
                     TextView activity1p_tv = findViewById(R.id.activity1p);
                     TextView activity2p_tv = findViewById(R.id.activity2p);
@@ -274,14 +251,6 @@ public class MainActivity extends AppCompatActivity{
         try {
             musicRecommender = new MusicRecommender(this);
 
-            /* Testing KNN
-            Song[] songs = musicRecommender.knn(5, -1.0f, 1.0f);
-            for (Song s : songs) {
-                Log.i("KNN", s.artist + " , " + s.title);
-            }
-            */
-
-
             TextView rec1 = findViewById(R.id.rec1);
             TextView rec2 = findViewById(R.id.rec2);
             TextView rec3 = findViewById(R.id.rec3);
@@ -359,6 +328,11 @@ public class MainActivity extends AppCompatActivity{
                         recs[i].setText(toTextView);
                     }
                 }
+
+                // Set global values
+                v_global = thisValence;
+                a_global = thisArousal;
+                t_global = thisStride;
             }
                                      });
 
@@ -375,12 +349,21 @@ public class MainActivity extends AppCompatActivity{
                 retrieved_VA_tv.setText(getVA());
                 Log.e("DEBUG", "VA value is " + getVA());
 
-                int VA = Integer.parseInt(getVA());
-                int thisRow = (VA / 10) - 1;
-                int thisCol = (VA % 10) - 1;
+                int VA = 33;
+                try {
+                    VA = Integer.parseInt(getVA());
+                }
+                catch (Exception e) {
+                    Log.e("DEBUG", "Couldn't parse an integer value from site");
+                }
+                int thisRow = (VA / 10) - 1; //kp_rows - 1 - ((VA / 10) - 1);
+                int thisCol = kp_cols - 1 - ((VA % 10) - 1);
 
-                float thisValence = key_points[thisRow][thisCol][0];
-                float thisArousal = key_points[thisRow][thisCol][1];
+                float thisValence = key_points[thisCol][thisRow][0];
+                float thisArousal = key_points[thisCol][thisRow][1];
+
+                TextView estimated_VA = findViewById(R.id.estimated_VA);
+                estimated_VA.setText(Float.toString(thisValence) + ", " + Float.toString(thisArousal));
 
                 float thisStride = (float)effectiveStrideRate;
 
@@ -416,9 +399,186 @@ public class MainActivity extends AppCompatActivity{
                     }
                 }
 
+                // Set global values
+                v_global = thisValence;
+                a_global = thisArousal;
+                t_global = thisStride;
+
             }
         });
 
+        Button adjust_upbeat = findViewById(R.id.adjust_upbeat);
+        Button adjust_downer = findViewById(R.id.adjust_downer);
+        Button adjust_hype = findViewById(R.id.adjust_hype);
+        Button adjust_chill = findViewById(R.id.adjust_chill);
+
+        adjust_upbeat.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                TextView rec1 = findViewById(R.id.rec1);
+                TextView rec2 = findViewById(R.id.rec2);
+                TextView rec3 = findViewById(R.id.rec3);
+                TextView rec4 = findViewById(R.id.rec4);
+                TextView rec5 = findViewById(R.id.rec5);
+
+                TextView[] recs = {rec1, rec2, rec3, rec4, rec5};
+
+                v_global += v_adjust;
+
+                TextView estimated_VA = findViewById(R.id.estimated_VA);
+                estimated_VA.setText(String.format("%.2f", v_global) + ", " + String.format("%.2f", a_global));
+
+                // If non-active, search based on VA
+                if (stateMachine.state == 0) {
+                    Song[] recommendations = musicRecommender.knn(K, v_global, a_global);
+                    for (int i = 0; i < K; i++) {
+                        String toTextView = "";
+                        toTextView += recommendations[i].artist + " - " + recommendations[i].title + " (V " +
+                                String.format("%.2f", recommendations[i].v) + ", A " +
+                                String.format("%.2f", recommendations[i].a) + ")";
+                        recs[i].setText(toTextView);
+                    }
+                }
+
+                else {
+                    Song[] recommendations = musicRecommender.knn(K, v_global, a_global, t_global);
+                    for (int i = 0; i < K; i++) {
+                        String toTextView = "";
+                        toTextView += recommendations[i].artist + " - " + recommendations[i].title + " (V " +
+                                String.format("%.2f", recommendations[i].v) + ", A " +
+                                String.format("%.2f", recommendations[i].a) + ", T " +
+                                String.format("%.2f", recommendations[i].t) + ")";
+                        recs[i].setText(toTextView);
+                    }
+                }
+
+            }
+        });
+
+        adjust_downer.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                TextView rec1 = findViewById(R.id.rec1);
+                TextView rec2 = findViewById(R.id.rec2);
+                TextView rec3 = findViewById(R.id.rec3);
+                TextView rec4 = findViewById(R.id.rec4);
+                TextView rec5 = findViewById(R.id.rec5);
+
+                TextView[] recs = {rec1, rec2, rec3, rec4, rec5};
+
+                v_global -= v_adjust;
+
+                TextView estimated_VA = findViewById(R.id.estimated_VA);
+                estimated_VA.setText(String.format("%.2f", v_global) + ", " + String.format("%.2f", a_global));
+
+                // If non-active, search based on VA
+                if (stateMachine.state == 0) {
+                    Song[] recommendations = musicRecommender.knn(K, v_global, a_global);
+                    for (int i = 0; i < K; i++) {
+                        String toTextView = "";
+                        toTextView += recommendations[i].artist + " - " + recommendations[i].title + " (V " +
+                                String.format("%.2f", recommendations[i].v) + ", A " +
+                                String.format("%.2f", recommendations[i].a) + ")";
+                        recs[i].setText(toTextView);
+                    }
+                }
+
+                else {
+                    Song[] recommendations = musicRecommender.knn(K, v_global, a_global, t_global);
+                    for (int i = 0; i < K; i++) {
+                        String toTextView = "";
+                        toTextView += recommendations[i].artist + " - " + recommendations[i].title + " (V " +
+                                String.format("%.2f", recommendations[i].v) + ", A " +
+                                String.format("%.2f", recommendations[i].a) + ", T " +
+                                String.format("%.2f", recommendations[i].t) + ")";
+                        recs[i].setText(toTextView);
+                    }
+                }
+
+            }
+        });
+
+        adjust_hype.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                TextView rec1 = findViewById(R.id.rec1);
+                TextView rec2 = findViewById(R.id.rec2);
+                TextView rec3 = findViewById(R.id.rec3);
+                TextView rec4 = findViewById(R.id.rec4);
+                TextView rec5 = findViewById(R.id.rec5);
+
+                TextView[] recs = {rec1, rec2, rec3, rec4, rec5};
+
+                a_global += a_adjust;
+
+                TextView estimated_VA = findViewById(R.id.estimated_VA);
+                estimated_VA.setText(String.format("%.2f", v_global) + ", " + String.format("%.2f", a_global));
+
+                // If non-active, search based on VA
+                if (stateMachine.state == 0) {
+                    Song[] recommendations = musicRecommender.knn(K, v_global, a_global);
+                    for (int i = 0; i < K; i++) {
+                        String toTextView = "";
+                        toTextView += recommendations[i].artist + " - " + recommendations[i].title + " (V " +
+                                String.format("%.2f", recommendations[i].v) + ", A " +
+                                String.format("%.2f", recommendations[i].a) + ")";
+                        recs[i].setText(toTextView);
+                    }
+                }
+
+                else {
+                    Song[] recommendations = musicRecommender.knn(K, v_global, a_global, t_global);
+                    for (int i = 0; i < K; i++) {
+                        String toTextView = "";
+                        toTextView += recommendations[i].artist + " - " + recommendations[i].title + " (V " +
+                                String.format("%.2f", recommendations[i].v) + ", A " +
+                                String.format("%.2f", recommendations[i].a) + ", T " +
+                                String.format("%.2f", recommendations[i].t) + ")";
+                        recs[i].setText(toTextView);
+                    }
+                }
+
+            }
+        });
+
+        adjust_chill.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                TextView rec1 = findViewById(R.id.rec1);
+                TextView rec2 = findViewById(R.id.rec2);
+                TextView rec3 = findViewById(R.id.rec3);
+                TextView rec4 = findViewById(R.id.rec4);
+                TextView rec5 = findViewById(R.id.rec5);
+
+                TextView[] recs = {rec1, rec2, rec3, rec4, rec5};
+
+                a_global -= a_adjust;
+
+                TextView estimated_VA = findViewById(R.id.estimated_VA);
+                estimated_VA.setText(String.format("%.2f", v_global) + ", " + String.format("%.2f", a_global));
+
+                // If non-active, search based on VA
+                if (stateMachine.state == 0) {
+                    Song[] recommendations = musicRecommender.knn(K, v_global, a_global);
+                    for (int i = 0; i < K; i++) {
+                        String toTextView = "";
+                        toTextView += recommendations[i].artist + " - " + recommendations[i].title + " (V " +
+                                String.format("%.2f", recommendations[i].v) + ", A " +
+                                String.format("%.2f", recommendations[i].a) + ")";
+                        recs[i].setText(toTextView);
+                    }
+                }
+
+                else {
+                    Song[] recommendations = musicRecommender.knn(K, v_global, a_global, t_global);
+                    for (int i = 0; i < K; i++) {
+                        String toTextView = "";
+                        toTextView += recommendations[i].artist + " - " + recommendations[i].title + " (V " +
+                                String.format("%.2f", recommendations[i].v) + ", A " +
+                                String.format("%.2f", recommendations[i].a) + ", T " +
+                                String.format("%.2f", recommendations[i].t) + ")";
+                        recs[i].setText(toTextView);
+                    }
+                }
+
+            }
+        });
 
         stateMachine = new StateMachine();
 

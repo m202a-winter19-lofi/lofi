@@ -679,6 +679,10 @@ id activity4p
 id activity_chooser_view_content
 id activity_state
 id add
+id adjust_chill
+id adjust_downer
+id adjust_hype
+id adjust_upbeat
 id alertTitle
 id all
 id always
@@ -709,6 +713,7 @@ id disableHome
 id edit_query
 id eff_stride
 id end
+id estimated_VA
 id expand_activities_button
 id expanded_menu
 id fill

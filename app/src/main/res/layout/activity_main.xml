@@ -220,4 +220,47 @@
         android:layout_toStartOf="@+id/get_http"
         android:textSize="24sp"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/adjust_chill"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/retrieved_VA"
+        android:text="chill"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/adjust_hype"
+        android:layout_toStartOf="@+id/adjust_chill"
+        android:layout_below="@+id/retrieved_VA"
+        android:text="hype"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/adjust_downer"
+        android:layout_toStartOf="@+id/adjust_hype"
+        android:layout_below="@+id/retrieved_VA"
+        android:text="downer"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/adjust_upbeat"
+        android:layout_toStartOf="@+id/adjust_downer"
+        android:layout_below="@+id/retrieved_VA"
+        android:text="upbeat"/>
+
+    <TextView
+        android:id="@+id/estimated_VA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(estimated VA)"
+        android:textColor="#000000"
+        android:textAlignment="textEnd"
+        android:layout_below="@+id/adjust_chill"
+        android:layout_toStartOf="@+id/get_http"
+        android:textSize="24sp"/>
+
 </RelativeLayout>

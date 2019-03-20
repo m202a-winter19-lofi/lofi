@@ -1,4 +1,4 @@
-#Sun Mar 17 16:30:42 PDT 2019
+#Sun Mar 17 19:11:56 PDT 2019
 base.0=C\:\\Users\\Carlo\\Desktop\\grad\\2-winter2019\\ee202\\project\\LOFI\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\7
 path.0=classes.dex
 renamed.0=classes.dex
